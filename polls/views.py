@@ -7,6 +7,13 @@ from .models import Question, Choice
 
 
 class IndexView(generic.ListView):
+    """
+    Displays a list of the last five questions.
+
+    Attributes:
+        template_name (str): The name of template to be used for this view.
+        context_object_name (str): The name of context to be used in the template.
+    """
     template_name = 'polls/index.html'
     context_object_name = 'latest_question_list'
 
@@ -18,6 +25,13 @@ class IndexView(generic.ListView):
 
 
 class DetailView(generic.DetailView):
+    """
+    A view that displays details of each question.
+
+    Attributes:
+        model (Model): The model for question.
+        template_name (str): The name of template to be used for this view.
+    """
     model = Question
     template_name = 'polls/detail.html'
 
@@ -29,11 +43,24 @@ class DetailView(generic.DetailView):
 
 
 class ResultsView(generic.DetailView):
+    """
+    The views that displays results of vote for each question.
+
+    Attributes:
+        model (Model): The model for question.
+        template_name (str): The name of template to be used for this view.
+    """
     model = Question
     template_name = 'polls/results.html'
 
 
 def vote(request, question_id):
+    """
+    Handle voting process for each question.
+    :param request: The Http request object.
+    :param question_id: The ID of the question.
+    :return: Redirect to the result page
+    """
     question = get_object_or_404(Question, pk=question_id)
     try:
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
