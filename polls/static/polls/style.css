@@ -1,0 +1,15 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background-image: url('/static/polls/images/background.png');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+li a {
+  color: green;
+}
