@@ -1,0 +1,90 @@
+[
+{
+  "model": "polls.question",
+  "pk": 1,
+  "fields": {
+    "question_text": "Which season do you enjoy the most?",
+    "pub_date": "2024-08-21T10:04:34Z"
+  }
+},
+{
+  "model": "polls.question",
+  "pk": 2,
+  "fields": {
+    "question_text": "What is your favorite type of weather?",
+    "pub_date": "2024-08-24T12:38:49Z"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 6,
+  "fields": {
+    "question": 2,
+    "choice_text": "Sunny and warm",
+    "votes": 2
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 7,
+  "fields": {
+    "question": 2,
+    "choice_text": "Rainy and cool",
+    "votes": 3
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 8,
+  "fields": {
+    "question": 2,
+    "choice_text": "Snowy and cold",
+    "votes": 1
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 9,
+  "fields": {
+    "question": 2,
+    "choice_text": "Windy and mild",
+    "votes": 2
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 10,
+  "fields": {
+    "question": 1,
+    "choice_text": "Spring",
+    "votes": 1
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 11,
+  "fields": {
+    "question": 1,
+    "choice_text": "Summer",
+    "votes": 1
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 12,
+  "fields": {
+    "question": 1,
+    "choice_text": "Autumn",
+    "votes": 1
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 13,
+  "fields": {
+    "question": 1,
+    "choice_text": "Winter",
+    "votes": 2
+  }
+}
+]
