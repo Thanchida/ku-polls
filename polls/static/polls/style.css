@@ -1,0 +1,74 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background-image: url('/static/polls/images/background.png');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+li a {
+  color: #ff8fab;
+  font-size: 20px;
+  margin-bottom: 10px;
+  display: inline-block;
+  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
+}
+
+fieldset {
+  border: 3px solid #ffb3c6;
+  border-radius: 7px;
+}
+
+.question-text {
+  color: #fb6f92;
+  font-size: 30px;
+  margin-left: 5px;
+  display: inline-block;
+  font-family: 'Roboto', sans-serif;
+  }
+
+.choice-text {
+  color: #ff8fab;
+  font-size: 19px;
+  margin-bottom: 7px;
+  display: inline-block;
+  font-family: 'Roboto', sans-serif;
+  }
+
+.vote-button {
+  background-color: white;
+  border-color: #ffb3c6;
+  border-style: solid;
+  border-radius: 5px;
+  color: #fb6f92;
+  margin-left: 19px;
+  margin-top: 10px;
+  display: inline-block;
+  width: 100px;
+  height: 38px;
+  font-size: 15px;
+  font-weight: bold;
+  }
+
+.result-text {
+  color: #ff8fab;
+  font-size: 19px;
+  margin-bottom: 7px;
+  display: inline-block;
+  font-family: 'Roboto', sans-serif;
+  display: list-item;
+  }
+
+ .vote-again {
+  color: #ff8fab;
+  font-size: 17px;
+  margin-left: 20px;
+  display: inline-block;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  }
