@@ -10,9 +10,11 @@ class Question(models.Model):
     Attributes:
         question_text (CharField): The text of question.
         pub_date (DateTimeField): The datetime when question published.
+        end_date (DateTimeField): The ending date for voting.
     """
     question_text = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('date published')
+    pub_date = models.DateTimeField('date published', default=timezone.now)
+    end_date = models.DateTimeField('ending date for voting', null=True)
 
     def __str__(self):
         return self.question_text
