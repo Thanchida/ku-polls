@@ -1,9 +1,11 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib import messages
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from .models import Question, Choice
+from django.views.generic.base import RedirectView
 
 
 class IndexView(generic.ListView):
@@ -41,11 +43,13 @@ class DetailView(generic.DetailView):
         """
         return Question.objects.filter(pub_date__lte=timezone.now())
 
-    def get_only_published(self, request):
-        question = self.get_object()
+    def get(self, request, *args, **kwargs):
+        question = Question.objects.get(pk=self.kwargs['pk'])
         if not question.is_published():
-            return render(request, 'polls/detail.html',
-                          {'error_message': "This question is not publish yet"})
+            print("Redirecting to index")
+            messages.error(request, 'This question is not yet published.')
+            return redirect(reverse('polls:index'))
+        return super().get(request, *args, **kwargs)
 
 
 class ResultsView(generic.DetailView):
@@ -70,8 +74,8 @@ def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
 
     if not question.can_vote():
-        return render(request, 'polls/detail.html', {'question': question,
-                                                     'error_message': "Voting is not allow now"})
+        messages.error(request, "Voting is not allowed now")
+        return HttpResponseRedirect(reverse('polls:detail', args=(question_id,)))
 
     try:
         selected_choice = question.choice_set.get(pk=request.POST['choice'])

@@ -197,3 +197,10 @@ fieldset {
   line-height: 30px;
   border-radius: 20px;
   }
+
+.messages .error {
+  color: red;
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  list-style: none;
+  }
