@@ -1,11 +1,10 @@
 from django.shortcuts import get_object_or_404, render, redirect
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from .models import Question, Choice
-from django.views.generic.base import RedirectView
 
 
 class IndexView(generic.ListView):
