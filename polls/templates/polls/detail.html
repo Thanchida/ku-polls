@@ -17,8 +17,11 @@
                 <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id}}">
                 <label for="choice{{ forloop.counter }}" class="choice-text">{{ choice.choice_text }}</label><br>
             {% endfor %}
+            <input type="submit" value="Vote" class="vote-button">
+            <a href="{% url 'polls:results' question.id %}" class="result-button">Results</a>
         </fieldset>
-        <input type="submit" value="Vote" class="vote-button">
+        <br>
+        <a href="{% url 'polls:index' %}" class="to-list-button">Back to list of polls</a>
     </form>
 </body>
 </html>
