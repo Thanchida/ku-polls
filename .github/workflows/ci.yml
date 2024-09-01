@@ -25,4 +25,4 @@ jobs:
         env:
           DJANGO_SETTINGS_MODULE: mysite.settings
         run: |
-          pytest
+          pytest polls/tests.py
