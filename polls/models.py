@@ -10,9 +10,11 @@ class Question(models.Model):
     Attributes:
         question_text (CharField): The text of question.
         pub_date (DateTimeField): The datetime when question published.
+        end_date (DateTimeField): The ending date for voting.
     """
     question_text = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('date published')
+    pub_date = models.DateTimeField('date published', default=timezone.now)
+    end_date = models.DateTimeField('ending date for voting', null=True)
 
     def __str__(self):
         return self.question_text
@@ -20,6 +22,16 @@ class Question(models.Model):
     def was_published_recently(self):
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.pub_date <= now
+
+    def is_published(self):
+        current_time = timezone.localtime(timezone.now())
+        return current_time >= self.pub_date
+
+    def can_vote(self):
+        current_time = timezone.localtime(timezone.now())
+        if self.end_date is None:
+            return current_time >= self.pub_date
+        return self.pub_date <= current_time <= self.end_date
 
 
 class Choice(models.Model):

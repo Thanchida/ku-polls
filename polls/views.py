@@ -1,5 +1,6 @@
-from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render, redirect
+from django.http import HttpResponseRedirect
+from django.contrib import messages
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
@@ -21,7 +22,7 @@ class IndexView(generic.ListView):
         """
         Return the last five published questions.
         """
-        return Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
+        return Question.objects.order_by('-pub_date')[:5]
 
 
 class DetailView(generic.DetailView):
@@ -40,6 +41,14 @@ class DetailView(generic.DetailView):
         Excludes any questions that aren't published yet.
         """
         return Question.objects.filter(pub_date__lte=timezone.now())
+
+    def get(self, request, *args, **kwargs):
+        question = Question.objects.get(pk=self.kwargs['pk'])
+        if not question.is_published():
+            print("Redirecting to index")
+            messages.error(request, 'This question is not yet published.')
+            return redirect(reverse('polls:index'))
+        return super().get(request, *args, **kwargs)
 
 
 class ResultsView(generic.DetailView):
@@ -62,6 +71,11 @@ def vote(request, question_id):
     :return: Redirect to the result page
     """
     question = get_object_or_404(Question, pk=question_id)
+
+    if not question.can_vote():
+        messages.error(request, "Voting is not allowed now")
+        return HttpResponseRedirect(reverse('polls:detail', args=(question_id,)))
+
     try:
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
     except (KeyError, Choice.DoesNotExist):

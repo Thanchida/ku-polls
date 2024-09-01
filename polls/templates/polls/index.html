@@ -7,10 +7,29 @@
 <body>
     {% load static %}
     <link rel="stylesheet" href="{% static 'polls/style.css' %}">
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
     {% if latest_question_list %}
-    <ul>
+    <ul class="question-list">
     {% for question in latest_question_list %}
-        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+        <li class="question-item">
+            <div class="question-container">
+                {% if question.is_published %}
+                    <div class="open-status">Open</div>
+                {% else %}
+                    <div class="close-status">Close</div>
+                {% endif %}
+                <a href="{% url 'polls:detail' question.id %}" class="question-link">{{ question.question_text }}</a>
+                <a href="{% url 'polls:results' question.id %}" class="result-index-button">Result</a>
+            </div>
+        </li>
     {% endfor %}
     </ul>
 {% else %}
