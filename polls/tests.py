@@ -35,14 +35,26 @@ class QuestionModelTests(TestCase):
         self.assertIs(recent_question.was_published_recently(), True)
 
     def test_future_question_is_not_published(self):
+        """
+        Test that the 'is_published' method returns False for a question
+        with a future publication date.
+        """
         future_question = create_question(question_text='Future Question.', days=5)
         self.assertIs(future_question.is_published(), False)
 
     def test_past_question_is_published(self):
+        """
+        Test that the 'is_published' method returns True for a question
+        with a past publication date.
+        """
         past_question = create_question(question_text='Past Question', days=-5)
         self.assertIs(past_question.is_published(), True)
 
     def test_question_is_published(self):
+        """
+        Test that the 'is_published' method returns True for a question
+        with a current publication date.
+        """
         question = Question.objects.create(question_text='Question with default pub_date')
         self.assertIs(question.is_published(), True)
 
@@ -70,6 +82,17 @@ class QuestionModelTests(TestCase):
         pub_date = timezone.now() - timezone.timedelta(10)
         end_date = timezone.now() + timezone.timedelta(5)
         question = Question.objects.create(question_text='end of voting question.', pub_date=pub_date,
+                                           end_date=end_date)
+        self.assertTrue(question.can_vote())
+
+    def test_can_vote_on_end_date(self):
+        """
+        Test that can_vote() returns True if the current time is exactly the end_date
+        (the last moment to vote).
+        """
+        pub_date = timezone.now() - timezone.timedelta(10)
+        end_date = (timezone.now() + timezone.timedelta(1)).replace(hour=0, minute=0, second=0, microsecond=0)
+        question = Question.objects.create(question_text='Vote on end date.', pub_date=pub_date,
                                            end_date=end_date)
         self.assertTrue(question.can_vote())
 
@@ -103,25 +126,23 @@ class QuestionIndexViewTests(TestCase):
         response = self.client.get(reverse('polls:index'))
         self.assertQuerySetEqual(response.context['latest_question_list'], [question])
 
-    def test_future_question(self):
+    def test_status_display_for_published_question(self):
         """
-        Questions with a pub_date in the future aren't displayed on
-        the index page.
+        Test that correct status (Open) is displayed for published question.
         """
-        create_question(question_text="Future question.", days=30)
+        create_question(question_text="Published question.", days=-1)
         response = self.client.get(reverse('polls:index'))
-        self.assertContains(response, "No polls are available.")
-        self.assertQuerySetEqual(response.context['latest_question_list'], [])
+        self.assertContains(response, "Published question")
+        self.assertContains(response, '<div class="open-status">Open</div>', html=True)
 
-    def test_future_question_and_past_question(self):
+    def test_status_display_for_unpublished_question(self):
         """
-        Even if both past and future questions exist, only past questions
-        are displayed.
+        Test that correct status (Close) is displayed for unpublished question.
         """
-        question = create_question(question_text="Past question.", days=-30)
-        create_question(question_text="Future question.", days=30)
+        create_question(question_text="Published question.", days=10)
         response = self.client.get(reverse('polls:index'))
-        self.assertQuerySetEqual(response.context['latest_question_list'], [question])
+        self.assertContains(response, "Published question")
+        self.assertContains(response, '<div class="close-status">Close</div>', html=True)
 
     def test_two_past_question(self):
         """
@@ -137,12 +158,12 @@ class QuestionDetailViewTests(TestCase):
     def test_future_question(self):
         """
         The detail view of a question with a pub_date in the future
-        returns a 404 not found.
+        redirect to the index page and show message error.
         """
         future_question = create_question(question_text='Future question.', days=5)
         url = reverse('polls:detail', args=(future_question.id,))
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 404)
+        response = self.client.get(url, follow=True)
+        self.assertContains(response, "This question is not yet published.")
 
     def test_past_question(self):
         """
