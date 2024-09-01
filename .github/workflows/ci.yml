@@ -22,4 +22,4 @@ jobs:
 
       - name: Run tests
         run: |
-          pytest polls/tests
+          pytest polls/tests.py
