@@ -1,5 +1,8 @@
 ## KU Polls: Online Survey Questions 
 
+![Build Status](https://github.com/Thanchida/ku-polls/actions/workflows/ci.yml/badge.svg)
+
+
 An application to conduct online polls and surveys based
 on the [Django Tutorial project](https://docs.djangoproject.com/en/5.1/intro/tutorial01/), with
 additional features.
