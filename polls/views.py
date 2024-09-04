@@ -46,10 +46,19 @@ class DetailView(generic.DetailView):
     def get(self, request, *args, **kwargs):
         question = Question.objects.get(pk=self.kwargs['pk'])
         if not question.is_published():
-            print("Redirecting to index")
             messages.error(request, 'This question is not yet published.')
             return redirect(reverse('polls:index'))
         return super().get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        question = self.get_object()
+        try:
+            user_vote = Vote.objects.get(user=self.request.user, choice__question=question)
+        except Vote.DoesNotExist:
+            user_vote = None
+        context['user_vote'] = user_vote
+        return context
 
 
 class ResultsView(generic.DetailView):
