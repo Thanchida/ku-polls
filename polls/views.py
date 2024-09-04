@@ -1,10 +1,11 @@
 from django.shortcuts import get_object_or_404, render, redirect
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
-from .models import Question, Choice
+from .models import Question, Choice, Vote
 
 
 class IndexView(generic.ListView):
@@ -63,6 +64,7 @@ class ResultsView(generic.DetailView):
     template_name = 'polls/results.html'
 
 
+@login_required
 def vote(request, question_id):
     """
     Handle voting process for each question.
@@ -82,9 +84,17 @@ def vote(request, question_id):
         return render(request, 'polls/detail.html', {'question': question,
                                                      'error_message': "You didn't select a choice",
                                                      })
-    else:
-        selected_choice.votes += 1
-        selected_choice.save()
+
+    this_user = request.user
+    try:
+        vote = Vote.objects.get(user=this_user, choice__question=question)
+        vote.choice = selected_choice
+        vote.save()
+        messages.success(request, f"Your vote was changed to '{selected_choice.choice_text}'")
+    except Vote.DoesNotExist:
+        vote = Vote.objects.create(user=this_user, choice=selected_choice)
+        messages.success(request, f"You voted for '{selected_choice.choice_text}'")
+
     return HttpResponseRedirect(reverse('polls:results', args=(question_id,)))
 
 
