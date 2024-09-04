@@ -8,13 +8,13 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'polls/style.css' %}">
 
-    <div class="container">
-        <h1>Ku Polls</h1>
+    <h1 class="ku-poll-title">Ku Polls</h1>
+    <div class="user-container">
         {% if user.is_authenticated %}
             Welcome back, {{user.username}}
             <form action="{% url 'logout' %}" method="post">
                 {% csrf_token %}
-                <button>Logout</button>
+                <button class="logout-button">Logout</button>
             </form>
         {% else %}
             Please <a href="{% url 'login' %}?next={{request.path}}">Login</a>
@@ -33,14 +33,21 @@
     <ul class="question-list">
     {% for question in latest_question_list %}
         <li class="question-item">
-            <div class="question-container">
+            <div class="question-with-status">
                 {% if question.is_published %}
                     <div class="open-status">Open</div>
                 {% else %}
                     <div class="close-status">Close</div>
                 {% endif %}
-                <a href="{% url 'polls:detail' question.id %}" class="question-link">{{ question.question_text }}</a>
-                <a href="{% url 'polls:results' question.id %}" class="result-index-button">Result</a>
+                <div class="question-container">
+                    <div class="question-text-container">
+                        <h1 class="question-text">{{ question.question_text }}</h1>
+                    </div>
+                    <div class="question-link-container">
+                    <a href="{% url 'polls:detail' question.id %}" class="question-link">Vote</a>
+                    <a href="{% url 'polls:results' question.id %}" class="result-index-button">Result</a>
+                    </div>
+                </div>
             </div>
         </li>
     {% endfor %}
