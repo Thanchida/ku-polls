@@ -13,6 +13,9 @@ body {
 fieldset {
   border: 3px solid #ffb3c6;
   border-radius: 7px;
+  margin-top: 80px;
+  width: 1000px;
+  margin-left: 225px;
 }
 
 .question-text {
@@ -53,7 +56,7 @@ fieldset {
   border-radius: 30px;
   color: white;
   text-align: center;
-  margin-left: 19px;
+  margin-left: 25px;
   margin-top: 10px;
   width: 200px;
   height: 40px;
