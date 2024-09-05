@@ -48,7 +48,10 @@ class DetailView(generic.DetailView):
         if not question.is_published():
             messages.error(request, 'This question is not yet published.')
             return redirect(reverse('polls:index'))
-        return super().get(request, *args, **kwargs)
+        if request.user.is_authenticated:
+            return super().get(request, *args, **kwargs)
+        messages.error(request, "Voting requires you to be logged in.")
+        return redirect(reverse('polls:index'))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

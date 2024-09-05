@@ -224,10 +224,18 @@ fieldset {
   }
 
 .messages .error {
-  color: red;
+  background-color: #ffcbd1;
+  border-radius: 7px;
+  color: #d1001f;
   font-family: 'Roboto', sans-serif;
-  font-size: 20px;
+  font-size: 18px;
   list-style: none;
+  width: 430px;
+  height: 40px;
+  text-align: center;
+  line-height: 37px;
+  margin-left: 500px;
+  border: 1px solid #c30010;
   }
 
 .ku-poll-title {
@@ -255,4 +263,19 @@ fieldset {
   color: #fb6f92;
   font-weight: bold;
   font-size: 16px;
+  }
+
+.messages .success {
+  background-color: #d4e8c2;
+  border-radius: 7px;
+  color: #287233;
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  list-style: none;
+  width: 430px;
+  height: 40px;
+  text-align: center;
+  line-height: 37px;
+  margin-left: 500px;
+  border: 1px solid #a4c593;
   }
