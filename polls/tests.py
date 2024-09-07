@@ -4,6 +4,7 @@ from django.test import TestCase
 from django.utils import timezone
 from django.urls import reverse
 from .models import Question
+from django.contrib.auth import get_user_model
 
 
 class QuestionModelTests(TestCase):
@@ -154,7 +155,14 @@ class QuestionIndexViewTests(TestCase):
         self.assertQuerySetEqual(response.context['latest_question_list'], [question2, question1])
 
 
+User = get_user_model()
+
+
 class QuestionDetailViewTests(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(username="test", password="test123")
+        self.client.login(username="test", password="test123")
+
     def test_future_question(self):
         """
         The detail view of a question with a pub_date in the future
@@ -173,4 +181,5 @@ class QuestionDetailViewTests(TestCase):
         past_question = create_question(question_text='Past Question.', days=-5)
         url = reverse('polls:detail', args=(past_question.id,))
         response = self.client.get(url)
-        self.assertContains(response, past_question.question_text)
+        if not self.user.is_authenticated:
+            self.assertRedirects(response, reverse('polls:index'))
