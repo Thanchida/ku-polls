@@ -119,7 +119,7 @@ def vote(request, question_id):
     except Vote.DoesNotExist:
         vote = Vote.objects.create(user=this_user, choice=selected_choice)
         messages.success(request, f"You voted for '{selected_choice.choice_text}'")
-        logger.info(f"{this_user.username} submitted a vote for choice {selected_choice.choice_id} from {get_client_ip(request)}")
+        logger.info(f"{this_user.username} submitted a vote for choice {selected_choice.id} from {get_client_ip(request)}")
 
     return HttpResponseRedirect(reverse('polls:results', args=(question_id,)))
 
