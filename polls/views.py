@@ -6,6 +6,10 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from .models import Question, Choice, Vote
+import logging
+
+
+logger = logging.getLogger("polls")
 
 
 class IndexView(generic.ListView):
@@ -44,10 +48,17 @@ class DetailView(generic.DetailView):
         return Question.objects.filter(pub_date__lte=timezone.now())
 
     def get(self, request, *args, **kwargs):
-        question = Question.objects.get(pk=self.kwargs['pk'])
+        try:
+            question = Question.objects.get(pk=self.kwargs['pk'])
+        except Question.DoesNotExist as ex:
+            logger.exception(f"Non-existent question {self.kwargs['pk']} %s", ex)
+            messages.error(request, f'No question found with ID {self.kwargs["pk"]}.')
+            return redirect(reverse('polls:index'))
+
         if not question.is_published():
             messages.error(request, 'This question is not yet published.')
             return redirect(reverse('polls:index'))
+
         if request.user.is_authenticated:
             return super().get(request, *args, **kwargs)
         messages.error(request, "Voting requires you to be logged in.")
@@ -103,10 +114,22 @@ def vote(request, question_id):
         vote.choice = selected_choice
         vote.save()
         messages.success(request, f"Your vote was changed to '{selected_choice.choice_text}'")
+        logger.info(
+            f"{this_user.username} changed vote to choice {selected_choice.id} from {get_client_ip(request)}")
     except Vote.DoesNotExist:
         vote = Vote.objects.create(user=this_user, choice=selected_choice)
         messages.success(request, f"You voted for '{selected_choice.choice_text}'")
+        logger.info(f"{this_user.username} submitted a vote for choice {selected_choice.choice_id} from {get_client_ip(request)}")
 
     return HttpResponseRedirect(reverse('polls:results', args=(question_id,)))
 
+
+def get_client_ip(request):
+    """Get the visitor’s IP address using request headers."""
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
 
