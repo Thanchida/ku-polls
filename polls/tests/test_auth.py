@@ -93,3 +93,12 @@ class UserAuthTest(django.test.TestCase):
         # How to fix it?
         login_with_next = f"{reverse('login')}?next={vote_url}"
         self.assertRedirects(response, login_with_next)
+
+    def test_invalid_login(self):
+        """Login should fail if incorrect credentials."""
+        login_url = reverse("login")
+        form_data = {"username": "testuser", "password": "WrongPassword"}
+        response = self.client.post(login_url, form_data)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Please enter a correct username and password. "
+                                      "Note that both fields may be case-sensitive.")
