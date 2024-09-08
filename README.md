@@ -58,5 +58,5 @@ All project documents are in the [Project Wiki](../../wiki/Home).
 
 ## Iteration Plan
 - [Iteration 1](../../wiki/Iteration%201%20Plan)
-- [Iteration 2](../../wiki/Iteration&202%20Plan)
-- [Iteration 3](../../wiki/Iteration&203%20Plan)
+- [Iteration 2](../../wiki/Iteration%202%20Plan)
+- [Iteration 3](../../wiki/Iteration%203%20Plan)
