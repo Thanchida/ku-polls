@@ -62,7 +62,7 @@ class DetailView(generic.DetailView):
         if request.user.is_authenticated:
             return super().get(request, *args, **kwargs)
         messages.error(request, "Voting requires you to be logged in.")
-        return redirect(reverse('polls:index'))
+        return redirect(reverse('login'))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
