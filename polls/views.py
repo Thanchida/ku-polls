@@ -6,6 +6,8 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from .models import Question, Choice, Vote
+from django.contrib.auth.signals import user_logged_in, user_logged_out, user_login_failed
+from django.dispatch import receiver
 import logging
 
 
@@ -115,11 +117,13 @@ def vote(request, question_id):
         vote.save()
         messages.success(request, f"Your vote was changed to '{selected_choice.choice_text}'")
         logger.info(
-            f"{this_user.username} changed vote to choice {selected_choice.id} from {get_client_ip(request)}")
+            f"{this_user.username} changed vote for question_id {question_id} to choice_id {selected_choice.id} "
+            f"from {get_client_ip(request)}")
     except Vote.DoesNotExist:
         vote = Vote.objects.create(user=this_user, choice=selected_choice)
         messages.success(request, f"You voted for '{selected_choice.choice_text}'")
-        logger.info(f"{this_user.username} submitted a vote for choice {selected_choice.id} from {get_client_ip(request)}")
+        logger.info(f"{this_user.username} submitted a vote for question_id {question_id} "
+                    f"choice_id {selected_choice.id} from {get_client_ip(request)}")
 
     return HttpResponseRedirect(reverse('polls:results', args=(question_id,)))
 
@@ -133,3 +137,21 @@ def get_client_ip(request):
         ip = request.META.get('REMOTE_ADDR')
     return ip
 
+
+@receiver(user_logged_in)
+def log_user_login(sender, request, user, **kwargs):
+    ip_address = get_client_ip(request)
+    logger.info(f'User {user.username} logged in from {ip_address}')
+
+
+@receiver(user_logged_out)
+def log_user_login(sender, request, user, **kwargs):
+    ip_address = get_client_ip(request)
+    logger.info(f'User {user.username} logged out from {ip_address}')
+
+
+@receiver(user_login_failed)
+def log_failed_login(sender, request, credentials, **kwargs):
+    ip_address = get_client_ip(request)
+    username = credentials.get('username', 'unknown')
+    logger.warning(f'User {username} login failed from {ip_address}')
