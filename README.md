@@ -55,6 +55,7 @@ All project documents are in the [Project Wiki](../../wiki/Home).
 - [Vision and Scope](https://github.com/Thanchida/ku-polls/wiki/Vision-and-Scope)
 - [Requirements](../../wiki/Requirements)
 - [Project Plan](../../wiki/Project%20Plan)
+- [Domain Model](../../wiki/Domain%20model)
 
 ## Iteration Plan
 - [Iteration 1](../../wiki/Iteration%201%20Plan)
