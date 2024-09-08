@@ -13,6 +13,9 @@ body {
 fieldset {
   border: 3px solid #ffb3c6;
   border-radius: 7px;
+  margin-top: 80px;
+  width: 1000px;
+  margin-left: 225px;
 }
 
 .question-text {
@@ -53,7 +56,7 @@ fieldset {
   border-radius: 30px;
   color: white;
   text-align: center;
-  margin-left: 19px;
+  margin-left: 25px;
   margin-top: 10px;
   width: 200px;
   height: 40px;
@@ -81,7 +84,7 @@ fieldset {
    }
 
 .results tbody tr {
-  color: black;
+  color: #8B4513;
   }
 
 .results th,
@@ -120,6 +123,17 @@ fieldset {
   line-height: 40px;
   }
 
+.question-with-status {
+  background-color: #fae6e7;
+  padding: 12px 15px;
+  border-radius: 12px;
+  justify-content: space-between;
+  align-items: center;
+  width: 1000px;
+  margin-left: 215px;
+  margin-top: 10px;
+  }
+
 .question-list {
   list-style-type: none;
   padding: 0;
@@ -128,20 +142,14 @@ fieldset {
 
 .question-item {
   margin-bottom: 20px;
-}
+ }
 
 .question-container {
-  background-color: #fae6e7;
-  padding: 12px 15px;
-  border-radius: 12px;
+  display: flex;
   justify-content: space-between;
-  align-items: center;
-  width: 900px;
-  margin-left: 20px;
-  margin-top: 10px;
-}
+  }
 
-.question-link {
+.question-text {
   text-decoration: none;
   font-family: 'Roboto', sans-serif;
   color: #fb6f92;
@@ -150,6 +158,26 @@ fieldset {
   margin-left: 12px;
   margin-top: 2px;
   line-height: 60px;
+  }
+
+.question-link {
+  background-color: #fb6f92;
+  border-color: #fb6f92;
+  border-style: solid;
+  border-radius: 20px;
+  color: white;
+  margin-left: 10px;
+  margin-top: 10px;
+  display: inline-block;
+  width: 100px;
+  height: 36px;
+  font-size: 15px;
+  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  text-decoration: none;
+  line-height: 40px;
+  margin-right: 0;
   }
 
 .result-index-button {
@@ -199,8 +227,58 @@ fieldset {
   }
 
 .messages .error {
-  color: red;
+  background-color: #ffcbd1;
+  border-radius: 7px;
+  color: #d1001f;
   font-family: 'Roboto', sans-serif;
-  font-size: 20px;
+  font-size: 18px;
   list-style: none;
+  width: 430px;
+  height: 40px;
+  text-align: center;
+  line-height: 37px;
+  margin-left: 500px;
+  border: 1px solid #c30010;
+  }
+
+.ku-poll-title {
+  color: #fb6f92;
+  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
+  font-size: 54px;
+  margin-left: 640px;
+  }
+
+.user-container {
+  color: #fb6f92;
+  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
+  font-size: 22px;
+  top: 15px;
+  right: 20px;
+  position: absolute;
+  }
+
+.logout-button {
+  background-color: #fae6e7;
+  border: none;
+  border-radius: 5px;
+  color: #fb6f92;
+  font-weight: bold;
+  font-size: 16px;
+  }
+
+.messages .success {
+  background-color: #d4e8c2;
+  border-radius: 7px;
+  color: #287233;
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  list-style: none;
+  width: 430px;
+  height: 40px;
+  text-align: center;
+  line-height: 37px;
+  margin-left: 500px;
+  border: 1px solid #a4c593;
   }

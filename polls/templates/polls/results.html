@@ -7,6 +7,17 @@
 <body>
   {% load static %}
   <link rel="stylesheet" href="{% static 'polls/style.css' %}">
+  <div class="user-container">
+        {% if user.is_authenticated %}
+            Welcome back, {{user.username}}
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button class="logout-button">Logout</button>
+            </form>
+        {% else %}
+            Please <a href="{% url 'login' %}?next={{request.path}}">Login</a>
+        {% endif %}
+  </div>
   <h1 class="question-text">{{ question.question_text }}</h1>
 
   <table class="results">
