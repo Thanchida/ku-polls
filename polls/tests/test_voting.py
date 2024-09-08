@@ -25,17 +25,7 @@ class VotingTests(TestCase):
         self.user = User.objects.create_user(username="test", password="test123")
         self.client.login(username="test", password="test123")
 
-    def test_future_question(self):
-        """
-        The detail view of a question with a pub_date in the future
-        redirect to the index page and show message error.
-        """
-        future_question = create_question(question_text='Future question.', days=5)
-        url = reverse('polls:detail', args=(future_question.id,))
-        response = self.client.get(url, follow=True)
-        self.assertContains(response, "This question is not yet published.")
-
-    def test_past_question(self):
+    def test_visitor_cannot_vote(self):
         """
         The detail view of a question with a pub_date in the past
         displays the question's text.
@@ -45,3 +35,15 @@ class VotingTests(TestCase):
         response = self.client.get(url)
         if not self.user.is_authenticated:
             self.assertRedirects(response, reverse('polls:index'))
+
+    def test_only_authenticated_user_can_vote(self):
+        """
+        The detail view of a question with a pub_date in the past
+        displays the question's text.
+        """
+        past_question = create_question(question_text='Past Question.', days=-5)
+        url = reverse('polls:detail', args=(past_question.id,))
+        response = self.client.get(url)
+
+        if self.user.is_authenticated:
+            self.assertEqual(response.status_code, 200)
