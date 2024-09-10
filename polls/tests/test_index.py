@@ -43,11 +43,13 @@ class QuestionIndexViewTests(TestCase):
         self.assertContains(response, "Published question")
         self.assertContains(response, '<div class="open-status">Open</div>', html=True)
 
-    def test_status_display_for_unpublished_question(self):
+    def test_status_display_for_closed_question(self):
         """
         Test that correct status (Close) is displayed for unpublished question.
         """
-        create_question(question_text="Published question.", days=10)
+        pub_date = timezone.now() + datetime.timedelta(days=-10)
+        end_date = timezone.now() + datetime.timedelta(days=-5)
+        Question.objects.create(question_text="Published question.", pub_date=pub_date, end_date=end_date)
         response = self.client.get(reverse('polls:index'))
         self.assertContains(response, "Published question")
         self.assertContains(response, '<div class="close-status">Close</div>', html=True)
