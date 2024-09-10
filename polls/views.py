@@ -29,7 +29,7 @@ class IndexView(generic.ListView):
         """
         Return the last five published questions.
         """
-        return Question.objects.order_by('-pub_date')[:5]
+        return Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
 
 
 class DetailView(generic.DetailView):
@@ -59,6 +59,10 @@ class DetailView(generic.DetailView):
 
         if not question.is_published():
             messages.error(request, 'This question is not yet published.')
+            return redirect(reverse('polls:index'))
+
+        if not question.can_vote():
+            messages.error(request, 'This poll is closed.')
             return redirect(reverse('polls:index'))
 
         if request.user.is_authenticated:

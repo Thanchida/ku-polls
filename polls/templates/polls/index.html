@@ -34,7 +34,7 @@
     {% for question in latest_question_list %}
         <li class="question-item">
             <div class="question-with-status">
-                {% if question.is_published %}
+                {% if question.can_vote %}
                     <div class="open-status">Open</div>
                 {% else %}
                     <div class="close-status">Close</div>
