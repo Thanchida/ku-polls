@@ -2,18 +2,20 @@
 <body>
 {% load static %}
     <link rel="stylesheet" href="{% static 'polls/style.css' %}">
-<h2>Login</h2>
+<h2 class="ku-poll-title">Login</h2>
 
 {% if messages %}
-{% for msg in messages %}
-<p class="{{msg.tags}}">{{msg}}</p>
-{% endfor %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
 {% endif %}
-<form method="post">
+<form method="post" id="login-form">
   {% csrf_token %}
   {{ form.as_p }}
   <p>
-  <button type="submit">Login</button>
+  <button type="submit" class="login-button">Login</button>
   </p>
   <input type="hidden" name="next" value="{{next}}"/>
  </form>

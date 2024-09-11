@@ -282,3 +282,41 @@ fieldset {
   margin-left: 500px;
   border: 1px solid #a4c593;
   }
+
+#login-form {
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  color: #fb6f92;
+  font-weight: bold;
+  align-item: center;
+  margin-left: 354px;
+  }
+
+#login-form input[type="text"],
+#login-form input[type="password"],
+#login-form textarea {
+  width: 50%;
+  height: 80px;
+  padding: 10px;
+  margin-bottom: 15px;
+  font-size: 18px;
+  border: 1px solid #fae6e7;
+  border-radius: 18px;
+  color: #fb6f92;
+  background-color: #fae6e7;
+}
+
+.login-button {
+  background-color: #fb6f92;
+  border-color: #fb6f92;
+  border-style: solid;
+  border-radius: 20px;
+  color: white;
+  width: 120px;
+  height: 50px;
+  font-size: 18px;
+  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  margin-left: 575px;
+  }
