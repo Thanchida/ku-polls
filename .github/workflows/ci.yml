@@ -24,5 +24,9 @@ jobs:
       - name: Run tests
         env:
           DJANGO_SETTINGS_MODULE: mysite.settings
+          DEBUG: ${{ secrets.DEBUG }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
+          TIME_ZONE: ${{ secrets.TIME_ZONE }}
         run: |
           pytest polls/tests
