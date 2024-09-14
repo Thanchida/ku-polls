@@ -32,11 +32,11 @@ pip install -r requirements.txt
 6. Set value for externalized variable
    * On MS Window use
       ```commandline
-       copy .env.sample .env
+       copy sample.env .env
       ```
    * On macOS and Linux use
      ```commandline
-      cp .env.sample .env
+      cp sample.env .env
      ```
 After that, change the values in the .env file.
 
