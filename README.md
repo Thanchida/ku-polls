@@ -15,8 +15,6 @@ You can follow this installation guide [here](https://github.com/Thanchida/ku-po
 
 ## Running the Application
 
-* Run the program
-
 default server is [localhost:8000](http://localhost:8000/)
 ```commandline
 python3 manage.py runserver
