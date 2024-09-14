@@ -30,3 +30,4 @@ jobs:
           TIME_ZONE: ${{ secrets.TIME_ZONE }}
         run: |
           pytest polls/tests
+
