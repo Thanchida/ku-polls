@@ -39,7 +39,9 @@ class QuestionModelTests(TestCase):
         was_published_recently() returns True for questions whose pub_date
         is within the last day.
         """
-        time = timezone.now() - datetime.timedelta(hours=23, minutes=59, seconds=59)
+        time = timezone.now() - datetime.timedelta(hours=23,
+                                                   minutes=59,
+                                                   seconds=59)
         recent_question = Question(pub_date=time)
         self.assertIs(recent_question.was_published_recently(), True)
 
@@ -48,7 +50,8 @@ class QuestionModelTests(TestCase):
         Test that the 'is_published' method returns False for a question
         with a future publication date.
         """
-        future_question = create_question(question_text='Future Question.', days=5)
+        future_question = create_question(question_text='Future Question.',
+                                          days=5)
         self.assertIs(future_question.is_published(), False)
 
     def test_past_question_is_published(self):
@@ -64,14 +67,17 @@ class QuestionModelTests(TestCase):
         Test that the 'is_published' method returns True for a question
         with a current publication date.
         """
-        question = Question.objects.create(question_text='Question with default pub_date')
+        question = (Question.objects.
+                    create(question_text='Question with default pub_date'))
         self.assertIs(question.is_published(), True)
 
     def test_cannot_vote_before_pub_date(self):
         """
-        Test that can_vote() return False for the question that has not been published yet.
+        Test that can_vote() return False for the
+        question that has not been published yet.
         """
-        question = create_question(question_text='Not publish question.', days=10)
+        question = create_question(question_text='Not publish question.',
+                                   days=10)
         self.assertFalse(question.can_vote())
 
     def test_cannot_vote_after_end_date(self):
@@ -80,8 +86,9 @@ class QuestionModelTests(TestCase):
         """
         pub_date = timezone.now() - timezone.timedelta(10)
         end_date = timezone.now() - timezone.timedelta(5)
-        question = Question.objects.create(question_text='end of voting question.', pub_date=pub_date,
-                                           end_date=end_date)
+        question = (Question.objects.
+                    create(question_text='end of voting question.',
+                           pub_date=pub_date, end_date=end_date))
         self.assertFalse(question.can_vote())
 
     def test_can_vote_in_voting_period(self):
@@ -90,17 +97,21 @@ class QuestionModelTests(TestCase):
         """
         pub_date = timezone.now() - timezone.timedelta(10)
         end_date = timezone.now() + timezone.timedelta(5)
-        question = Question.objects.create(question_text='end of voting question.', pub_date=pub_date,
-                                           end_date=end_date)
+        question = (Question.objects.
+                    create(question_text='end of voting question.',
+                           pub_date=pub_date, end_date=end_date))
         self.assertTrue(question.can_vote())
 
     def test_can_vote_on_end_date(self):
         """
-        Test that can_vote() returns True if the current time is exactly the end_date
+        Test that can_vote() returns True if
+        the current time is exactly the end_date
         (the last moment to vote).
         """
         pub_date = timezone.now() - timezone.timedelta(10)
-        end_date = (timezone.now() + timezone.timedelta(1)).replace(hour=0, minute=0, second=0, microsecond=0)
-        question = Question.objects.create(question_text='Vote on end date.', pub_date=pub_date,
+        end_date = ((timezone.now() + timezone.timedelta(1)).
+                    replace(hour=0, minute=0, second=0, microsecond=0))
+        question = Question.objects.create(question_text='Vote on end date.',
+                                           pub_date=pub_date,
                                            end_date=end_date)
         self.assertTrue(question.can_vote())
