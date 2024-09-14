@@ -1,3 +1,10 @@
+"""
+Views for the polls application.
+
+This module includes the views for displaying and managing polls.
+"""
+
+import logging
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
@@ -5,10 +12,10 @@ from django.contrib import messages
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
-from .models import Question, Choice, Vote
-from django.contrib.auth.signals import user_logged_in, user_logged_out, user_login_failed
 from django.dispatch import receiver
-import logging
+from django.contrib.auth.signals import (user_logged_in,
+                                         user_logged_out, user_login_failed)
+from .models import Question, Choice, Vote
 
 
 logger = logging.getLogger("polls")
@@ -20,7 +27,8 @@ class IndexView(generic.ListView):
 
     Attributes:
         template_name (str): The name of template to be used for this view.
-        context_object_name (str): The name of context to be used in the template.
+        context_object_name (str): The name of context to be
+        used in the template.
     """
     template_name = 'polls/index.html'
     context_object_name = 'latest_question_list'
@@ -29,7 +37,8 @@ class IndexView(generic.ListView):
         """
         Return the last five published questions.
         """
-        return Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
+        return (Question.objects.filter(pub_date__lte=timezone.now()).
+                order_by('-pub_date'))
 
 
 class DetailView(generic.DetailView):
@@ -53,8 +62,10 @@ class DetailView(generic.DetailView):
         try:
             question = Question.objects.get(pk=self.kwargs['pk'])
         except Question.DoesNotExist as ex:
-            logger.exception(f"Non-existent question {self.kwargs['pk']} %s", ex)
-            messages.error(request, f'No question found with ID {self.kwargs["pk"]}.')
+            logger.exception(f"Non-existent "
+                             f"question {self.kwargs['pk']} %s", ex)
+            messages.error(request, f'No question found '
+                                    f'with ID {self.kwargs["pk"]}.')
             return redirect(reverse('polls:index'))
 
         if not question.is_published():
@@ -74,7 +85,8 @@ class DetailView(generic.DetailView):
         context = super().get_context_data(**kwargs)
         question = self.get_object()
         try:
-            user_vote = Vote.objects.get(user=self.request.user, choice__question=question)
+            user_vote = Vote.objects.get(user=self.request.user,
+                                         choice__question=question)
         except Vote.DoesNotExist:
             user_vote = None
         context['user_vote'] = user_vote
@@ -105,29 +117,35 @@ def vote(request, question_id):
 
     if not question.can_vote():
         messages.error(request, "Voting is not allowed now")
-        return HttpResponseRedirect(reverse('polls:detail', args=(question_id,)))
+        return HttpResponseRedirect(reverse('polls:detail',
+                                            args=(question_id,)))
 
     try:
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
     except (KeyError, Choice.DoesNotExist):
-        return render(request, 'polls/detail.html', {'question': question,
-                                                     'error_message': "You didn't select a choice",
-                                                     })
+        messages.error(request, "You didn't select a choice")
+        return render(request, 'polls/detail.html', {'question': question})
 
     this_user = request.user
     try:
         vote = Vote.objects.get(user=this_user, choice__question=question)
         vote.choice = selected_choice
         vote.save()
-        messages.success(request, f"Your vote was changed to '{selected_choice.choice_text}'")
+        messages.success(request,
+                         f"Your vote was "
+                         f"changed to '{selected_choice.choice_text}'")
         logger.info(
-            f"{this_user.username} changed vote for question_id {question_id} to choice_id {selected_choice.id} "
+            f"{this_user.username} changed vote for question_id {question_id} "
+            f"to choice_id {selected_choice.id} "
             f"from {get_client_ip(request)}")
     except Vote.DoesNotExist:
         vote = Vote.objects.create(user=this_user, choice=selected_choice)
-        messages.success(request, f"You voted for '{selected_choice.choice_text}'")
-        logger.info(f"{this_user.username} submitted a vote for question_id {question_id} "
-                    f"choice_id {selected_choice.id} from {get_client_ip(request)}")
+        messages.success(request,
+                         f"You voted for '{selected_choice.choice_text}'")
+        logger.info(f"{this_user.username} submitted a "
+                    f"vote for question_id {question_id} "
+                    f"choice_id {selected_choice.id} "
+                    f"from {get_client_ip(request)}")
 
     return HttpResponseRedirect(reverse('polls:results', args=(question_id,)))
 
@@ -149,7 +167,7 @@ def log_user_login(sender, request, user, **kwargs):
 
 
 @receiver(user_logged_out)
-def log_user_login(sender, request, user, **kwargs):
+def log_user_logout(sender, request, user, **kwargs):
     ip_address = get_client_ip(request)
     logger.info(f'User {user.username} logged out from {ip_address}')
 

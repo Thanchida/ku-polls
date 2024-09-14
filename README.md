@@ -11,42 +11,26 @@ This app was created as part of the [Individual Software Process](
 https://cpske.github.io/ISP) course at [Kasetsart University](https://www.ku.ac.th).
 
 ## Installation
-1. clone the repository
-```commandline
-git clone https://github.com/Thanchida/ku-polls.git
-```
-
-2. Navigate to the project directory
-```commandline
-cd ku-polls
-```
-
-3. Create a virtual environment
-```commandline
-python3 -m venv env
-```
-
-4. Activate the virtual environment
-    * On MS Window use
-   ```commandline
-    \env\Scripts\activate
-   ```
-   * On macOS and Linux use
-   ```commandline
-    source env/bin/activate
-   ```
-
-5. Install the requirements package
-```commandline
-pip install -r requirements.txt
-```
+You can follow this installation guide [here](https://github.com/Thanchida/ku-polls/blob/iteration4/Installation.md)
 
 ## Running the Application
 
-* Run the program
+default server is [localhost:8000](http://localhost:8000/)
 ```commandline
 python3 manage.py runserver
 ```
+
+## Demo User
+| username  |password|
+|-----------|--------|
+| mydemo1   |mydemo111|
+| mydemo2   |mydemo222|
+| mydemo3   |mydemo333|
+
+## Demo Admin
+| username  | password      |
+|-----------|---------------|
+| myadmin   | demoadmin!123 |
 
 ## Project Documents
 
@@ -61,3 +45,4 @@ All project documents are in the [Project Wiki](../../wiki/Home).
 - [Iteration 1](../../wiki/Iteration%201%20Plan)
 - [Iteration 2](../../wiki/Iteration%202%20Plan)
 - [Iteration 3](../../wiki/Iteration%203%20Plan)
+- [Iteration 4](../../wiki/Iteration%204%20Plan)
