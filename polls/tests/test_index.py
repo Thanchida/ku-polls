@@ -32,7 +32,8 @@ class QuestionIndexViewTests(TestCase):
         """
         question = create_question(question_text="Past question.", days=-30)
         response = self.client.get(reverse('polls:index'))
-        self.assertQuerySetEqual(response.context['latest_question_list'], [question])
+        self.assertQuerySetEqual(response.context['latest_question_list'],
+                                 [question])
 
     def test_status_display_for_published_question(self):
         """
@@ -41,7 +42,8 @@ class QuestionIndexViewTests(TestCase):
         create_question(question_text="Published question.", days=-1)
         response = self.client.get(reverse('polls:index'))
         self.assertContains(response, "Published question")
-        self.assertContains(response, '<div class="open-status">Open</div>', html=True)
+        self.assertContains(response, '<div class="open-status">Open</div>',
+                            html=True)
 
     def test_status_display_for_closed_question(self):
         """
@@ -49,10 +51,12 @@ class QuestionIndexViewTests(TestCase):
         """
         pub_date = timezone.now() + datetime.timedelta(days=-10)
         end_date = timezone.now() + datetime.timedelta(days=-5)
-        Question.objects.create(question_text="Published question.", pub_date=pub_date, end_date=end_date)
+        Question.objects.create(question_text="Published question.",
+                                pub_date=pub_date, end_date=end_date)
         response = self.client.get(reverse('polls:index'))
         self.assertContains(response, "Published question")
-        self.assertContains(response, '<div class="close-status">Close</div>', html=True)
+        self.assertContains(response, '<div class="close-status">Close</div>',
+                            html=True)
 
     def test_two_past_question(self):
         """
@@ -61,4 +65,5 @@ class QuestionIndexViewTests(TestCase):
         question1 = create_question(question_text="Past question 1.", days=-30)
         question2 = create_question(question_text="Past question 2.", days=-5)
         response = self.client.get(reverse('polls:index'))
-        self.assertQuerySetEqual(response.context['latest_question_list'], [question2, question1])
+        self.assertQuerySetEqual(response.context['latest_question_list'],
+                                 [question2, question1])
