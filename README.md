@@ -11,7 +11,7 @@ This app was created as part of the [Individual Software Process](
 https://cpske.github.io/ISP) course at [Kasetsart University](https://www.ku.ac.th).
 
 ## Installation
-You can follow this installation guide [here](https://github.com/Thanchida/ku-polls/blob/iteration4/Installation.md)
+You can follow this installation guide [here](installation.md)
 
 ## Running the Application
 
