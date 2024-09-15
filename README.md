@@ -36,7 +36,7 @@ python3 manage.py runserver
 
 All project documents are in the [Project Wiki](../../wiki/Home).
 
-- [Vision and Scope](https://github.com/Thanchida/ku-polls/wiki/Vision-and-Scope)
+- [Vision and Scope](../../wiki/Vision%20and%20Scope)
 - [Requirements](../../wiki/Requirements)
 - [Project Plan](../../wiki/Project%20Plan)
 - [Domain Model](../../wiki/Domain%20model)
