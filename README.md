@@ -1,6 +1,6 @@
 ## KU Polls: Online Survey Questions 
 
-[![Build Status](https://github.com/Thanchida/ku-polls/actions/workflows/ci.yml/badge.svg)](https://github.com/Thanchida/ku-polls/actions)
+[![CI](https://github.com/Thanchida/ku-polls/actions/workflows/ci.yml/badge.svg)](https://github.com/Thanchida/ku-polls/actions/workflows/ci.yml)
 
 
 An application to conduct online polls and surveys based
