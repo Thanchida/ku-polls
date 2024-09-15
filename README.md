@@ -1,11 +1,12 @@
 ## KU Polls: Online Survey Questions 
 
-![Build Status](https://github.com/Thanchida/ku-polls/actions/workflows/ci.yml/badge.svg)
+[![Build Status](https://github.com/Thanchida/ku-polls/actions/workflows/ci.yml/badge.svg)](https://github.com/Thanchida/ku-polls/actions)
 
 
 An application to conduct online polls and surveys based
-on the [Django Tutorial project](https://docs.djangoproject.com/en/5.1/intro/tutorial01/), with
-additional features.
+on the [Django Tutorial project](https://docs.djangoproject.com/en/5.1/intro/tutorial01/) This application allows everyone to view the results of each poll, but only 
+authenticated users can cast votes. It also includes additional features such as allowing users to change their votes, 
+with the application retaining and displaying their previous votes.
 
 This app was created as part of the [Individual Software Process](
 https://cpske.github.io/ISP) course at [Kasetsart University](https://www.ku.ac.th).
@@ -36,7 +37,7 @@ python3 manage.py runserver
 
 All project documents are in the [Project Wiki](../../wiki/Home).
 
-- [Vision and Scope](https://github.com/Thanchida/ku-polls/wiki/Vision-and-Scope)
+- [Vision and Scope](../../wiki/Vision%20and%20Scope)
 - [Requirements](../../wiki/Requirements)
 - [Project Plan](../../wiki/Project%20Plan)
 - [Domain Model](../../wiki/Domain%20model)
