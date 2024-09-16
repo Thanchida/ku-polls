@@ -18,6 +18,15 @@
             Please <a href="{% url 'login' %}?next={{request.path}}">Login</a>
         {% endif %}
   </div>
+
+  {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
   <h1 class="question-text">{{ question.question_text }}</h1>
 
   <table class="results">
