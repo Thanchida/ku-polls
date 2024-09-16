@@ -1,0 +1,15 @@
+[run]
+omit =
+    */usr/lib/*
+    */usr/local/*
+    */.local/*
+    env/*
+    */__init__.py
+    */migrations/*
+    mysite/*
+    manage.py
+
+[report]
+exclude_lines =
+    def __str__
+    def __repr__
