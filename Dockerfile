@@ -16,15 +16,5 @@ RUN pip install -r requirements.txt
 COPY . .
 RUN chmod +x ./entrypoint.sh
 
-# Running Django functions in here is not good!
-# Apply migrations
-#RUN python3 ./manage.py migrate
-
-# Apply fixtures
-#RUN python3 ./manage.py loaddata data/polls-v4.json data/votes-v4.json data/users.json
-
 EXPOSE 8000
-# Run application
-#CMD [ "python3", "./manage.py", "runserver", "0.0.0.0:8000" ]
-#CMD python3 ./manage.py migrate ; python3 ./manage.py runserver 0.0.0.0:8000
 CMD [ "./entrypoint.sh" ]
