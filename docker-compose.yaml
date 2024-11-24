@@ -1,5 +1,4 @@
 version: "3.9"
-
 services:
   db:
     image: "postgres:17"
@@ -8,19 +7,21 @@ services:
       POSTGRES_USER: ${DATABASE_USERNAME}
       POSTGRES_DB: ${DATABASE_NAME}
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      test: [
+        "CMD-SHELL",
+        "pg_isready -d $$POSTGRES_DB -U $$POSTGRES_USER"
+      ]
       start_period: 10s
       interval: 5s
       retries: 5
     volumes:
       - ./db:/var/lib/postgresql/data
-
   app:
     build:
       context: .
       args:
         SECRET_KEY: ${SECRET_KEY}
-    env_file: docker.env
+    env_file: .env
     environment:
       SECRET_KEY: ${SECRET_KEY}
       DEBUG: ${DEBUG}
